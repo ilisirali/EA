@@ -214,6 +214,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.locationPermissionDesc": "Adresinizi otomatik bulabilmemiz için konum iznine ihtiyacımız var. Lütfen aşağıdaki adımları izleyin:",
     "activity.locationPermissionSteps": "1. Tarayıcınızın adres çubuğundaki kilit (veya ayar) simgesine tıklayın.\n2. \"Konum\" (Location) iznini \"İzin Ver\" (Allow) olarak değiştirin.\n3. Cihazınızın Konum (GPS) özelliğinin açık olduğundan emin olun.",
     "activity.tryAgain": "Tekrar Dene",
+    "common.add": "Ekle",
+    "activity.weeklySummary": "Haftalık çalışma özeti günlüğü",
+    "activity.addressUpdated": "Adres güncellendi.",
+    "activity.addressFailed": "Adres ismi çözülemedi.",
+    "activity.gpsNotSupported": "GPS desteklenmiyor.",
+    "activity.locationFailed": "Konum alınamadı.",
+    "activity.totalWeeklyHours": "Haftalık toplam mesai",
+    "activity.generalLocation": "Genel Konum",
   },
   en: {
     // Auth
@@ -417,6 +425,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.locationPermissionDesc": "We need location access to automatically find your address. Please follow these steps:",
     "activity.locationPermissionSteps": "1. Click the lock (or settings) icon in your browser's address bar.\n2. Change the \"Location\" permission to \"Allow\".\n3. Ensure your device's Location (GPS) is turned on.",
     "activity.tryAgain": "Try Again",
+    "common.add": "Add",
+    "activity.weeklySummary": "Weekly work summary journal",
+    "activity.addressUpdated": "Address updated.",
+    "activity.addressFailed": "Could not resolve address.",
+    "activity.gpsNotSupported": "GPS is not supported.",
+    "activity.locationFailed": "Could not get location.",
+    "activity.totalWeeklyHours": "Total weekly hours",
+    "activity.generalLocation": "General Location",
   },
   nl: {
     // Auth
@@ -621,6 +637,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.locationPermissionDesc": "We hebben locatietoegang nodig om uw adres automatisch te vinden. Volg deze stappen:",
     "activity.locationPermissionSteps": "1. Klik op het slotje (of instellingen) pictogram in de adresbalk van uw browser.\n2. Wijzig de \"Locatie\" (Location) toestemming naar \"Toestaan\" (Allow).\n3. Zorg ervoor dat de Locatie (GPS) van uw apparaat is ingeschakeld.",
     "activity.tryAgain": "Opnieuw Proberen",
+    "common.add": "Toevoegen",
+    "activity.weeklySummary": "Wekelijks werkoverzicht logboek",
+    "activity.addressUpdated": "Adres bijgewerkt.",
+    "activity.addressFailed": "Kon adres niet oplossen.",
+    "activity.gpsNotSupported": "GPS wordt niet ondersteund.",
+    "activity.locationFailed": "Kon locatie niet ophalen.",
+    "activity.totalWeeklyHours": "Totaal wekelijkse uren",
+    "activity.generalLocation": "Algemene Locatie",
   },
   ar: {
     // Auth
@@ -821,6 +845,14 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.locationPermissionDesc": "نحتاج إلى الوصول إلى الموقع للعثور على عنوانك تلقائيًا. يرجى اتباع هذه الخطوات:",
     "activity.locationPermissionSteps": "1. انقر فوق رمز القفل (أو الإعدادات) في شريط عنوان المتصفح الخاص بك.\n2. قم بتغيير إذن \"الموقع\" (Location) إلى \"السماح\" (Allow).\n3. تأكد من تشغيل الموقع (GPS) في جهازك.",
     "activity.tryAgain": "حاول مرة أخرى",
+    "common.add": "إضافة",
+    "activity.weeklySummary": "سجل ملخص العمل الأسبوعي",
+    "activity.addressUpdated": "تم تحديث العنوان.",
+    "activity.addressFailed": "تعذر حل العنوان.",
+    "activity.gpsNotSupported": "نظام تحديد المواقع غير مدعوم.",
+    "activity.locationFailed": "تعذر الحصول على الموقع.",
+    "activity.totalWeeklyHours": "إجمالي الساعات الأسبوعية",
+    "activity.generalLocation": "الموقع العام",
   },
 };
 

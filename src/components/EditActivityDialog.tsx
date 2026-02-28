@@ -136,7 +136,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
   }, [open, activity.id, activity.description, activity.location, activity.activity_date]); // DİKKAT: activity'nin photos vb. alanları prop'ta direkt render olduğu için statelere gerek yok.
 
   const fetchAddress = async (day: keyof WeeklyWork) => {
-    if (!navigator.geolocation) return toast.error("GPS desteklenmiyor.");
+    if (!navigator.geolocation) return toast.error(t("activity.gpsNotSupported") || "GPS desteklenmiyor.");
     setLocatingDay(day);
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude: lat, longitude: lon } = pos.coords;
@@ -152,9 +152,9 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
         const finalAddr = `${street}${houseNum} ${city}`.trim();
 
         setWeeklyWork(prev => ({
-          ...prev, [day]: { ...prev[day], location: finalAddr || "Konum Belirlendi", googleMapsUrl: gMaps }
+          ...prev, [day]: { ...prev[day], location: finalAddr || t("activity.locationDetected") || "Konum Belirlendi", googleMapsUrl: gMaps }
         }));
-        toast.success("Adres güncellendi.");
+        toast.success(t("activity.addressUpdated") || "Adres güncellendi.");
       } catch (e) {
         setWeeklyWork(prev => ({ ...prev, [day]: { ...prev[day], googleMapsUrl: gMaps } }));
         toast.error("Adres ismi çözülemedi.");
@@ -167,7 +167,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
         setRetryDay(day);
         setPermissionDialogOpen(true);
       } else {
-        toast.error(t("auth.error") || "Konum alınamadı.");
+        toast.error(t("activity.locationFailed") || "Konum alınamadı.");
       }
     });
   };
@@ -264,7 +264,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
                     </div>
                     <div>
                       <span className="font-black text-primary uppercase tracking-tight text-xl">{t('form.weeklyWork')}</span>
-                      <p className="text-[10px] font-bold text-primary/60 uppercase tracking-widest leading-none mt-1">Haftalık toplam mesai</p>
+                      <p className="text-[10px] font-bold text-primary/60 uppercase tracking-widest leading-none mt-1">{t('activity.totalWeeklyHours')}</p>
                     </div>
                   </div>
                   <div className="bg-primary text-white px-6 py-2 rounded-2xl font-black text-xl shadow-lg shadow-primary/20">
@@ -332,7 +332,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
                       {/* RIGHT COLUMN: WORK & MEERWERK */}
                       <div className="space-y-6">
                         <div className="space-y-1">
-                          <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">Çalışma Detayları</span>
+                          <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">{t('activity.details')}</span>
                           <Textarea
                             value={weeklyWork[day]?.work || ''}
                             onChange={(e) => handleDayChange(day, 'work', e.target.value)}
@@ -341,7 +341,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
                           />
                         </div>
                         <div className="space-y-1">
-                          <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] ml-1">İlave İşler (Meerwerk)</span>
+                          <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] ml-1">{t('activity.extraWork')}</span>
                           <Textarea
                             value={weeklyWork[day]?.meerwerk || ''}
                             onChange={(e) => handleDayChange(day, 'meerwerk', e.target.value)}
@@ -356,7 +356,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
                       <div className="space-y-4">
                         <div className="flex items-center gap-2 text-muted-foreground/60 ml-1">
                           <MapPin className="w-4 h-4" />
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em]">Konum</span>
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t('form.location')}</span>
                         </div>
                         <div className="flex gap-3 items-center">
                           <div className="relative flex-1 group/loc">
@@ -375,7 +375,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
                       <div className="space-y-4">
                         <div className="flex items-center gap-2 text-muted-foreground/60 ml-1">
                           <Camera className="w-4 h-4" />
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t('activity.photo')} Galeri</span>
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t('activity.photo')} {t('activity.gallery')}</span>
                         </div>
                         <div className="flex flex-wrap gap-4">
                           {getPhotosForDay(activity.photos, day).map((photo, pIdx) => (
@@ -392,7 +392,7 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
                           ))}
                           <Button type="button" disabled={uploadingDay === day} onClick={() => { setCurrentUploadDay(day); fileInputRef.current?.click(); }} className="w-24 h-24 rounded-[1.5rem] border-2 border-dashed border-border bg-muted/20 text-muted-foreground flex flex-col items-center justify-center gap-2 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all duration-300">
                             {uploadingDay === day ? <Loader2 className="w-8 h-8 animate-spin" /> : <Plus className="w-8 h-8" />}
-                            <span className="text-[10px] font-black uppercase tracking-tighter opacity-70">Ekle</span>
+                            <span className="text-[10px] font-black uppercase tracking-tighter opacity-70">{t('common.add')}</span>
                           </Button>
                         </div>
                       </div>
@@ -403,13 +403,13 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
             ) : (
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">Açıklama</span>
+                  <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">{t('activity.description')}</span>
                   <Textarea value={simpleText} onChange={(e) => setSimpleText(e.target.value)} className="min-h-[200px] rounded-[2rem] bg-muted/20 border-none p-8 text-lg font-medium resize-none focus:bg-muted/30 transition-all" />
                 </div>
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 text-muted-foreground/60 ml-1">
                     <MapPin className="w-4 h-4" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Genel Konum</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t('activity.generalLocation')}</span>
                   </div>
                   <div className="relative">
                     <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-primary" />
