@@ -1,0 +1,84 @@
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ActivityCard.tsx
+  Line 16: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 125: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 202: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 349: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 383: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ActivityForm.tsx
+  Line 30: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ResetPasswordForm.tsx
+  Line 38: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ShareMenu.tsx
+  Line 48: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\badge.tsx
+  Line 30: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\button.tsx
+  Line 47: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\command.tsx
+  Line 24: An interface declaring no members is equivalent to its supertype. (@typescript-eslint/no-empty-object-type)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\form.tsx
+  Line 129: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\navigation-menu.tsx
+  Line 111: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\sidebar.tsx
+  Line 636: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\sonner.tsx
+  Line 27: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\textarea.tsx
+  Line 5: An interface declaring no members is equivalent to its supertype. (@typescript-eslint/no-empty-object-type)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\ui\toggle.tsx
+  Line 37: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\components\WeeklyActivityForm.tsx
+  Line 35: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\hooks\useActivities.tsx
+  Line 117: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 210: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 236: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 260: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 285: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 303: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 333: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 347: React Hook useEffect has a missing dependency: 'fetchActivities'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\hooks\useAuth.tsx
+  Line 16: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 140: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\hooks\useAutoTranslate.tsx
+  Line 126: The ref value 'requestIdRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'requestIdRef.current' to a variable inside the effect, and use that variable in the cleanup function. (react-hooks/exhaustive-deps)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\hooks\useLanguage.tsx
+  Line 5: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+  Line 12: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+  Line 840: Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components. (react-refresh/only-export-components)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\pages\AdminPanel.tsx
+  Line 84: React Hook useEffect has a missing dependency: 'fetchUsers'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+  Line 104: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 151: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 171: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 201: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 215: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\pages\Auth.tsx
+  Line 52: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 123: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+  Line 147: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+
+C:\Users\tured\OneDrive\Desktop\fetih-011d77d5-main\fetih-011d77d5-main\src\pages\Landing.tsx
+  Line 43: Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
