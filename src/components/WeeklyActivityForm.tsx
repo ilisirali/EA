@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { useLanguage, Language } from "@/hooks/useLanguage";
 import { toast } from "sonner";
+import { LocationPermissionDialog } from "./LocationPermissionDialog";
 
 const dateLocales: Record<Language, typeof nl> = { tr, en: enUS, nl, ar: arSA };
 
@@ -54,6 +55,8 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
   const [loading, setLoading] = useState(false);
   const [locatingDay, setLocatingDay] = useState<string | null>(null);
   const [uploadingDay, setUploadingDay] = useState<string | null>(null);
+  const [permissionDialogOpen, setPermissionDialogOpen] = useState(false);
+  const [retryDay, setRetryDay] = useState<keyof WeeklyWork | null>(null);
   const { t, language } = useLanguage();
 
   const cur = useMemo(() => ({
@@ -177,7 +180,8 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
     }, (error) => {
       setLocatingDay(null);
       if (error.code === error.PERMISSION_DENIED) {
-        alert(t("activity.locationPermissionRequired") || "Konum izni reddedildi. Lütfen cihazınızın konum özelliğini açın ve tarayıcı ayarlarından bu siteye konum izni verin.");
+        setRetryDay(day);
+        setPermissionDialogOpen(true);
       } else {
         toast.error(t("auth.error") || "Konum alınamadı.");
       }
@@ -396,6 +400,11 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
           {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <><Save className="w-5 h-5" /> {cur.addActivity}</>}
         </Button>
       </div>
+      <LocationPermissionDialog
+        open={permissionDialogOpen}
+        onOpenChange={setPermissionDialogOpen}
+        onRetry={() => retryDay && fetchAddress(retryDay)}
+      />
     </form>
   );
 }

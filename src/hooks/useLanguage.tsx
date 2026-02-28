@@ -210,6 +210,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.week": "Hafta no",
     "activity.error": "Rapor oluşturulurken bir hata oluştu.",
     "activity.locationPermissionRequired": "Konum izni reddedildi. Lütfen cihazınızın konum (GPS) özelliğini açın ve tarayıcı ayarlarından bu siteye konum izni verin.",
+    "activity.locationPermissionTitle": "Konum İzni Gerekli",
+    "activity.locationPermissionDesc": "Adresinizi otomatik bulabilmemiz için konum iznine ihtiyacımız var. Lütfen aşağıdaki adımları izleyin:",
+    "activity.locationPermissionSteps": "1. Tarayıcınızın adres çubuğundaki kilit (veya ayar) simgesine tıklayın.\n2. \"Konum\" (Location) iznini \"İzin Ver\" (Allow) olarak değiştirin.\n3. Cihazınızın Konum (GPS) özelliğinin açık olduğundan emin olun.",
+    "activity.tryAgain": "Tekrar Dene",
   },
   en: {
     // Auth
@@ -409,6 +413,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.totalRecords": "Total {count} Records",
     "activity.week": "Week",
     "activity.locationPermissionRequired": "Location permission denied. Please enable your device's location (GPS) and grant location permission to this site in your browser settings.",
+    "activity.locationPermissionTitle": "Location Permission Required",
+    "activity.locationPermissionDesc": "We need location access to automatically find your address. Please follow these steps:",
+    "activity.locationPermissionSteps": "1. Click the lock (or settings) icon in your browser's address bar.\n2. Change the \"Location\" permission to \"Allow\".\n3. Ensure your device's Location (GPS) is turned on.",
+    "activity.tryAgain": "Try Again",
   },
   nl: {
     // Auth
@@ -609,6 +617,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.totalRecords": "Totaal {count} Records",
     "activity.week": "Week",
     "activity.locationPermissionRequired": "Locatietoestemming geweigerd. Schakel de locatie van uw apparaat (GPS) in en verleen locatietoestemming aan deze site in uw browserinstellingen.",
+    "activity.locationPermissionTitle": "Locatietoestemming Vereist",
+    "activity.locationPermissionDesc": "We hebben locatietoegang nodig om uw adres automatisch te vinden. Volg deze stappen:",
+    "activity.locationPermissionSteps": "1. Klik op het slotje (of instellingen) pictogram in de adresbalk van uw browser.\n2. Wijzig de \"Locatie\" (Location) toestemming naar \"Toestaan\" (Allow).\n3. Zorg ervoor dat de Locatie (GPS) van uw apparaat is ingeschakeld.",
+    "activity.tryAgain": "Opnieuw Proberen",
   },
   ar: {
     // Auth
@@ -805,6 +817,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "activity.totalRecords": "إجمالي {count} سجلات",
     "activity.week": "أسبوع",
     "activity.locationPermissionRequired": "تم رفض إذن الموقع. يرجى تمكين موقع جهازك (GPS) ومنح إذن الموقع لهذا الموقع في إعدادات المتصفح.",
+    "activity.locationPermissionTitle": "إذن الموقع مطلوب",
+    "activity.locationPermissionDesc": "نحتاج إلى الوصول إلى الموقع للعثور على عنوانك تلقائيًا. يرجى اتباع هذه الخطوات:",
+    "activity.locationPermissionSteps": "1. انقر فوق رمز القفل (أو الإعدادات) في شريط عنوان المتصفح الخاص بك.\n2. قم بتغيير إذن \"الموقع\" (Location) إلى \"السماح\" (Allow).\n3. تأكد من تشغيل الموقع (GPS) في جهازك.",
+    "activity.tryAgain": "حاول مرة أخرى",
   },
 };
 
