@@ -140,20 +140,25 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
     setLocatingDay(day);
 
     try {
-      const permission = await Geolocation.checkPermissions();
-      if (permission.location !== 'granted') {
-        const request = await Geolocation.requestPermissions();
-        if (request.location !== 'granted') {
-          setRetryLocationDay(day);
-          setShowLocationPrompt(true);
-          setLocatingDay(null);
-          return;
+      try {
+        const permission = await Geolocation.checkPermissions();
+        if (permission.location !== 'granted') {
+          const request = await Geolocation.requestPermissions();
+          if (request.location !== 'granted') {
+            setRetryLocationDay(day);
+            setShowLocationPrompt(true);
+            setLocatingDay(null);
+            return;
+          }
         }
+      } catch (permErr) {
+        console.warn("Permission check skipped:", permErr);
       }
 
       const pos = await Geolocation.getCurrentPosition({
         enableHighAccuracy: true,
-        timeout: 10000
+        timeout: 15000,
+        maximumAge: 0
       });
 
       const lat = pos.coords.latitude;
@@ -178,8 +183,9 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
         setWeeklyWork(prev => ({ ...prev, [day]: { ...prev[day], googleMapsUrl: gMaps } }));
         toast.error(t("activity.addressFetchError") || "Adres ismi çözülemedi.");
       }
-    } catch (error) {
-      toast.error(t("activity.locationFailed"));
+    } catch (error: any) {
+      console.error("Geolocation Error:", error);
+      toast.error(`${t("activity.locationFailed")} (${error?.message || "Unknown error"})`);
     } finally {
       setLocatingDay(null);
     }
