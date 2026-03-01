@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { useToast } from './use-toast';
+import { useLanguage } from './useLanguage';
 import { compressImage } from '@/lib/imageCompression';
 
 export interface ActivityPhoto {
@@ -36,6 +37,7 @@ export function useActivities(filterUserId?: string | null) {
   const [loading, setLoading] = useState(true);
   const { user, isAdmin } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const fetchActivities = async () => {
     if (!user) return;
@@ -118,7 +120,7 @@ export function useActivities(filterUserId?: string | null) {
       setActivities(activitiesWithPhotos);
     } catch (error: any) {
       toast({
-        title: 'Hata',
+        title: t("auth.error"),
         description: error.message,
         variant: 'destructive',
       });
@@ -206,15 +208,15 @@ export function useActivities(filterUserId?: string | null) {
       await fetchActivities();
 
       toast({
-        title: 'Aktivite eklendi',
-        description: 'Aktiviteniz başarıyla kaydedildi.',
+        title: t("activity.saved"),
+        description: t("activity.saved"),
       });
 
       return activity;
     } catch (error: any) {
       console.error("Activity submission error:", error);
       toast({
-        title: 'Hata',
+        title: t("auth.error"),
         description: error.message + (error.details ? ` (${error.details})` : "") + (error.hint ? ` - Hint: ${error.hint}` : ""),
         variant: 'destructive',
       });
@@ -256,14 +258,14 @@ export function useActivities(filterUserId?: string | null) {
       await fetchActivities();
 
       toast({
-        title: 'Aktivite güncellendi',
-        description: 'Aktivite başarıyla güncellendi.',
+        title: t("edit.success"),
+        description: t("edit.success"),
       });
 
       return true;
     } catch (error: any) {
       toast({
-        title: 'Hata',
+        title: t("auth.error"),
         description: error.message,
         variant: 'destructive',
       });
@@ -283,12 +285,12 @@ export function useActivities(filterUserId?: string | null) {
       setActivities(prev => prev.filter(a => a.id !== id));
 
       toast({
-        title: 'Aktivite silindi',
-        description: 'Aktivite başarıyla silindi.',
+        title: t("adminPanel.userDeleted"),
+        description: t("adminPanel.userDeleted"),
       });
     } catch (error: any) {
       toast({
-        title: 'Hata',
+        title: t("auth.error"),
         description: error.message,
         variant: 'destructive',
       });
@@ -306,7 +308,7 @@ export function useActivities(filterUserId?: string | null) {
       return true;
     } catch (error: any) {
       toast({
-        title: 'Hata',
+        title: t("auth.error"),
         description: error.message,
         variant: 'destructive',
       });
@@ -337,7 +339,7 @@ export function useActivities(filterUserId?: string | null) {
       return true;
     } catch (error: any) {
       toast({
-        title: 'Hata',
+        title: t("auth.error"),
         description: error.message,
         variant: 'destructive',
       });
