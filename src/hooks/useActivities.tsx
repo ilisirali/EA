@@ -319,9 +319,12 @@ export function useActivities(filterUserId?: string | null) {
   const uploadPhotosForActivity = async (activityId: string, photos: File[], day?: string) => {
     if (!user) return false;
     try {
+      const activity = activities.find(a => a.id === activityId);
+      const targetUserId = activity ? activity.user_id : user.id;
+
       for (const photo of photos) {
         const compressedPhoto = await compressImage(photo);
-        const fileName = `${user.id}/${activityId}/${Date.now()}-${sanitizeFileName(compressedPhoto.name)}`;
+        const fileName = `${targetUserId}/${activityId}/${Date.now()}-${sanitizeFileName(compressedPhoto.name)}`;
 
         const { error: uploadError } = await supabase.storage
           .from('activity-photos')

@@ -18,6 +18,7 @@ import { Activity, ActivityPhoto } from "@/hooks/useActivities";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Geolocation } from '@capacitor/geolocation';
+import { LocationPermissionDialog } from "./LocationPermissionDialog";
 
 const dateLocales: Record<Language, typeof nl> = { tr, en: enUS, nl, ar: arSA };
 
@@ -93,6 +94,8 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
   const [locatingDay, setLocatingDay] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [currentUploadDay, setCurrentUploadDay] = useState<string | undefined>(undefined);
+  const [showLocationPrompt, setShowLocationPrompt] = useState(false);
+  const [retryLocationDay, setRetryLocationDay] = useState<keyof WeeklyWork | null>(null);
 
   // Yerel Çeviri Objesi (Dosya içi hızlı çözüm)
   const ui = useMemo(() => ({
@@ -141,7 +144,8 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
       if (permission.location !== 'granted') {
         const request = await Geolocation.requestPermissions();
         if (request.location !== 'granted') {
-          toast.error(t("activity.locationFailed"));
+          setRetryLocationDay(day);
+          setShowLocationPrompt(true);
           setLocatingDay(null);
           return;
         }
@@ -438,6 +442,16 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
           </div>
         </DialogContent>
       </Dialog>
+
+      <LocationPermissionDialog
+        open={showLocationPrompt}
+        onOpenChange={setShowLocationPrompt}
+        onRetry={() => {
+          if (retryLocationDay) {
+            fetchAddress(retryLocationDay);
+          }
+        }}
+      />
     </>
   );
 }

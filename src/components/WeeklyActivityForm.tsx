@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { useLanguage, Language } from "@/hooks/useLanguage";
 import { toast } from "sonner";
 import { Geolocation } from '@capacitor/geolocation';
+import { LocationPermissionDialog } from "./LocationPermissionDialog";
 
 const dateLocales: Record<Language, typeof nl> = { tr, en: enUS, nl, ar: arSA };
 
@@ -55,6 +56,8 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
   const [loading, setLoading] = useState(false);
   const [locatingDay, setLocatingDay] = useState<string | null>(null);
   const [uploadingDay, setUploadingDay] = useState<string | null>(null);
+  const [showLocationPrompt, setShowLocationPrompt] = useState(false);
+  const [retryLocationDay, setRetryLocationDay] = useState<keyof WeeklyWork | null>(null);
   const { t, language } = useLanguage();
 
   const cur = useMemo(() => ({
@@ -165,7 +168,8 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
       if (permission.location !== 'granted') {
         const request = await Geolocation.requestPermissions();
         if (request.location !== 'granted') {
-          toast.error(t("activity.locationFailed"));
+          setRetryLocationDay(day);
+          setShowLocationPrompt(true);
           setLocatingDay(null);
           return;
         }
@@ -411,6 +415,16 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
           {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <><Save className="w-5 h-5" /> {cur.addActivity}</>}
         </Button>
       </div>
+
+      <LocationPermissionDialog
+        open={showLocationPrompt}
+        onOpenChange={setShowLocationPrompt}
+        onRetry={() => {
+          if (retryLocationDay) {
+            fetchAddress(retryLocationDay);
+          }
+        }}
+      />
     </form>
   );
 }

@@ -1,8 +1,12 @@
--- Create role enum
-CREATE TYPE public.app_role AS ENUM ('admin', 'staff');
+-- Create role enum safely
+DO $$ BEGIN
+    CREATE TYPE public.app_role AS ENUM ('admin', 'staff');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Create user_roles table (separate from profiles for security)
-CREATE TABLE public.user_roles (
+CREATE TABLE IF NOT EXISTS public.user_roles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     role app_role NOT NULL DEFAULT 'staff',
@@ -11,7 +15,7 @@ CREATE TABLE public.user_roles (
 );
 
 -- Create profiles table
-CREATE TABLE public.profiles (
+CREATE TABLE IF NOT EXISTS public.profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     email TEXT NOT NULL,
     full_name TEXT,
@@ -20,7 +24,7 @@ CREATE TABLE public.profiles (
 );
 
 -- Create activities table
-CREATE TABLE public.activities (
+CREATE TABLE IF NOT EXISTS public.activities (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     description TEXT NOT NULL,
@@ -30,7 +34,7 @@ CREATE TABLE public.activities (
 );
 
 -- Create activity_photos table (stores URLs, not base64)
-CREATE TABLE public.activity_photos (
+CREATE TABLE IF NOT EXISTS public.activity_photos (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     activity_id UUID REFERENCES public.activities(id) ON DELETE CASCADE NOT NULL,
     file_url TEXT NOT NULL,
