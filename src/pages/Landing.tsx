@@ -38,7 +38,7 @@ export default function Landing() {
           </div>
 
           <div className="flex items-center gap-1 bg-white/5 p-1 rounded-lg border border-white/5">
-            {["nl", "en", "tr"].map((l) => (
+            {["nl", "en", "tr", "ar"].map((l) => (
               <button
                 key={l}
                 onClick={() => setLanguage(l as any)}
