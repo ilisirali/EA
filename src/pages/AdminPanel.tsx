@@ -9,6 +9,7 @@ import {
   CheckCircle,
   Loader2,
   Shield,
+  Edit2,
 } from "lucide-react";
 
 import { useAuth } from "@/hooks/useAuth";
@@ -78,6 +79,11 @@ const AdminPanel = () => {
   const [newUserPassword, setNewUserPassword] = useState("");
   const [newUserFullName, setNewUserFullName] = useState("");
   const [addingUser, setAddingUser] = useState(false);
+
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingUserId, setEditingUserId] = useState<string | null>(null);
+  const [editingUserName, setEditingUserName] = useState("");
+  const [updatingName, setUpdatingName] = useState(false);
 
   /* ---------------- FETCH USERS ---------------- */
   useEffect(() => {
@@ -174,6 +180,35 @@ const AdminPanel = () => {
       toast.error(error.message || t("adminPanel.addError"));
     } finally {
       setAddingUser(false);
+    }
+  };
+
+  /* ---------------- UPDATE USER NAME ---------------- */
+  const handleUpdateName = async () => {
+    if (!editingUserId || !editingUserName.trim()) {
+      toast.error(t("adminPanel.fillAllFields"));
+      return;
+    }
+
+    setUpdatingName(true);
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ full_name: editingUserName.trim() })
+        .eq("id", editingUserId);
+
+      if (error) throw error;
+
+      toast.success(t("adminPanel.nameUpdated"));
+      setIsEditDialogOpen(false);
+      setEditingUserId(null);
+      setEditingUserName("");
+
+      fetchUsers();
+    } catch (error: any) {
+      toast.error(error.message || t("adminPanel.updateError"));
+    } finally {
+      setUpdatingName(false);
     }
   };
 
@@ -417,6 +452,21 @@ const AdminPanel = () => {
                       {u.id !== user.id && (
                         <div className="flex gap-2 justify-end">
 
+                          {/* EDIT NAME BUTTON */}
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              setEditingUserId(u.id);
+                              setEditingUserName(u.full_name || "");
+                              setIsEditDialogOpen(true);
+                            }}
+                            disabled={actionLoading === u.id}
+                            title={t("adminPanel.editName")}
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </Button>
+
                           {/* ROLE BUTTON */}
                           <Button
                             size="sm"
@@ -483,6 +533,37 @@ const AdminPanel = () => {
           </div>
         )}
       </main>
+
+      {/* EDIT NAME DIALOG */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t('adminPanel.editName')}</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-3">
+            <div>
+              <Label>{t('adminPanel.newName')}</Label>
+              <Input
+                value={editingUserName}
+                onChange={(e) => setEditingUserName(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              onClick={handleUpdateName}
+              disabled={updatingName}
+            >
+              {updatingName && (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              )}
+              {t('edit.save')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -179,6 +179,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "adminPanel.adminAssigned": "Kullanıcı admin yapıldı",
     "adminPanel.adminRemoved": "Admin yetkisi kaldırıldı",
     "adminPanel.userOpened": "Kullanıcı açıldı",
+    "adminPanel.editName": "İsmi Düzenle",
+    "adminPanel.newName": "Yeni İsim",
+    "adminPanel.nameUpdated": "İsim başarıyla güncellendi",
+    "adminPanel.updateError": "İsim güncellenemedi",
     "error.404": "Hata! Sayfa bulunamadı",
     "error.returnHome": "Ana Sayfaya Dön",
 
@@ -391,6 +395,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "adminPanel.adminAssigned": "User assigned as admin",
     "adminPanel.adminRemoved": "Admin role removed",
     "adminPanel.userOpened": "User unblocked",
+    "adminPanel.editName": "Edit Name",
+    "adminPanel.newName": "New Name",
+    "adminPanel.nameUpdated": "Name updated successfully",
+    "adminPanel.updateError": "Failed to update name",
     "error.404": "Oops! Page not found",
     "error.returnHome": "Return to Home",
 
@@ -603,6 +611,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "adminPanel.adminAssigned": "Gebruiker toegewezen als admin",
     "adminPanel.adminRemoved": "Admin-rol verwijderd",
     "adminPanel.userOpened": "Gebruiker gedeblokkeerd",
+    "adminPanel.editName": "Naam Bewerken",
+    "adminPanel.newName": "Nieuwe Naam",
+    "adminPanel.nameUpdated": "Naam succesvol bijgewerkt",
+    "adminPanel.updateError": "Naam bijwerken mislukt",
     "error.404": "Oeps! Pagina niet gevonden",
     "error.returnHome": "Terug naar Home",
 
@@ -814,6 +826,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "adminPanel.adminAssigned": "تم تعيين المستخدم كمدير",
     "adminPanel.adminRemoved": "تمت إزالة دور المدير",
     "adminPanel.userOpened": "تم إلغاء حظر المستخدم",
+    "adminPanel.editName": "تعديل الاسم",
+    "adminPanel.newName": "الاسم الجديد",
+    "adminPanel.nameUpdated": "تم تحديث الاسم بنجاح",
+    "adminPanel.updateError": "فشل تحديث الاسم",
     "error.404": "عذراً! الصفحة غير موجودة",
     "error.returnHome": "العودة إلى الصفحة الرئيسية",
 
