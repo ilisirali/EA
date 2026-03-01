@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage, Language } from "@/hooks/useLanguage";
 import { EditActivityDialog } from "./EditActivityDialog";
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import {
@@ -266,12 +269,41 @@ export function ActivityCard({ activity, onDelete, onUpdate, onDeletePhoto, onUp
       // FINALIZING
       const fileName = `Werkrapport_Week${weekNumber}_${activity?.profile?.full_name?.replace(/ /g, '_') || 'Rapport'}.pdf`;
       const pdfBlob = doc.output('blob');
-      const file = new File([pdfBlob], fileName, { type: "application/pdf" });
 
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: pdfLabels.report });
+      if (Capacitor.isNativePlatform()) {
+        const base64data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(pdfBlob);
+          reader.onloadend = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result);
+            } else {
+              reject(new Error("Failed to read blob"));
+            }
+          };
+          reader.onerror = reject;
+        });
+        const base64 = base64data.split(',')[1];
+
+        const savedFile = await Filesystem.writeFile({
+          path: fileName,
+          data: base64,
+          directory: Directory.Cache
+        });
+
+        await Share.share({
+          title: pdfLabels.report,
+          url: savedFile.uri,
+          dialogTitle: pdfLabels.report
+        });
       } else {
-        doc.save(fileName);
+        const file = new File([pdfBlob], fileName, { type: "application/pdf" });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: pdfLabels.report });
+        } else {
+          doc.save(fileName);
+        }
       }
     } catch (err) {
       console.error("PDF Generation Error:", err);

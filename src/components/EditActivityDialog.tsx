@@ -17,7 +17,7 @@ import { useLanguage, Language } from "@/hooks/useLanguage";
 import { Activity, ActivityPhoto } from "@/hooks/useActivities";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { LocationPermissionDialog } from "./LocationPermissionDialog";
+import { Geolocation } from '@capacitor/geolocation';
 
 const dateLocales: Record<Language, typeof nl> = { tr, en: enUS, nl, ar: arSA };
 
@@ -93,8 +93,6 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
   const [locatingDay, setLocatingDay] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [currentUploadDay, setCurrentUploadDay] = useState<string | undefined>(undefined);
-  const [permissionDialogOpen, setPermissionDialogOpen] = useState(false);
-  const [retryDay, setRetryDay] = useState<keyof WeeklyWork | null>(null);
 
   // Yerel Çeviri Objesi (Dosya içi hızlı çözüm)
   const ui = useMemo(() => ({
@@ -136,11 +134,28 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
   }, [open, activity.id, activity.description, activity.location, activity.activity_date]); // DİKKAT: activity'nin photos vb. alanları prop'ta direkt render olduğu için statelere gerek yok.
 
   const fetchAddress = async (day: keyof WeeklyWork) => {
-    if (!navigator.geolocation) return toast.error(t("activity.gpsNotSupported") || "GPS desteklenmiyor.");
     setLocatingDay(day);
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude: lat, longitude: lon } = pos.coords;
+
+    try {
+      const permission = await Geolocation.checkPermissions();
+      if (permission.location !== 'granted') {
+        const request = await Geolocation.requestPermissions();
+        if (request.location !== 'granted') {
+          toast.error(t("activity.locationFailed"));
+          setLocatingDay(null);
+          return;
+        }
+      }
+
+      const pos = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000
+      });
+
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
       const gMaps = `https://www.google.com/maps?q=${lat},${lon}`;
+
       try {
         const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`, {
           headers: { 'Accept-Language': language }
@@ -152,24 +167,18 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
         const finalAddr = `${street}${houseNum} ${city}`.trim();
 
         setWeeklyWork(prev => ({
-          ...prev, [day]: { ...prev[day], location: finalAddr || t("activity.locationDetected") || "Konum Belirlendi", googleMapsUrl: gMaps }
+          ...prev, [day]: { ...prev[day], location: finalAddr || t("activity.locationDetected"), googleMapsUrl: gMaps }
         }));
-        toast.success(t("activity.addressUpdated") || "Adres güncellendi.");
+        toast.success(t("activity.addressUpdated"));
       } catch (e) {
         setWeeklyWork(prev => ({ ...prev, [day]: { ...prev[day], googleMapsUrl: gMaps } }));
-        toast.error("Adres ismi çözülemedi.");
-      } finally {
-        setLocatingDay(null);
+        toast.error(t("activity.addressFetchError") || "Adres ismi çözülemedi.");
       }
-    }, (error) => {
+    } catch (error) {
+      toast.error(t("activity.locationFailed"));
+    } finally {
       setLocatingDay(null);
-      if (error.code === error.PERMISSION_DENIED) {
-        setRetryDay(day);
-        setPermissionDialogOpen(true);
-      } else {
-        toast.error(t("activity.locationFailed") || "Konum alınamadı.");
-      }
-    });
+    }
   };
 
   const handleDayChange = (day: keyof WeeklyWork, field: keyof DayEntry, value: string | number) => {
@@ -429,11 +438,6 @@ export function EditActivityDialog({ activity, open, onOpenChange, onSave, onDel
           </div>
         </DialogContent>
       </Dialog>
-      <LocationPermissionDialog
-        open={permissionDialogOpen}
-        onOpenChange={setPermissionDialogOpen}
-        onRetry={() => retryDay && fetchAddress(retryDay)}
-      />
     </>
   );
 }

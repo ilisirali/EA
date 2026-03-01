@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 
 interface ShareMenuProps {
   onPrint: () => void;
@@ -24,26 +27,56 @@ export function ShareMenu({ onPrint, getShareText, generatePdf, pdfFileName }: S
         return;
       }
 
-      const file = new File([blob], pdfFileName, { type: 'application/pdf' });
+      if (Capacitor.isNativePlatform()) {
+        const base64data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result);
+            } else {
+              reject(new Error("Failed to read blob"));
+            }
+          };
+          reader.onerror = reject;
+        });
+        const base64 = base64data.split(',')[1];
 
-      // Use native share sheet if available (mobile & modern browsers)
-      if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({
+        const savedFile = await Filesystem.writeFile({
+          path: pdfFileName,
+          data: base64,
+          directory: Directory.Cache
+        });
+
+        await Share.share({
           title: t('invoice.weeklyReport'),
           text: getShareText(),
-          files: [file],
+          url: savedFile.uri,
+          dialogTitle: t('invoice.weeklyReport')
         });
+        toast.success(t('invoice.pdfDownloaded') || "Paylaşıldı");
       } else {
-        // Fallback: download the PDF directly
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = pdfFileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        toast.success(t('invoice.pdfDownloaded'));
+        const file = new File([blob], pdfFileName, { type: 'application/pdf' });
+
+        // Use native share sheet if available (mobile & modern browsers)
+        if (navigator.share && navigator.canShare?.({ files: [file] })) {
+          await navigator.share({
+            title: t('invoice.weeklyReport'),
+            text: getShareText(),
+            files: [file],
+          });
+        } else {
+          // Fallback: download the PDF directly
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = pdfFileName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          toast.success(t('invoice.pdfDownloaded'));
+        }
       }
     } catch (err: unknown) {
       if (err instanceof Error && err.name !== 'AbortError') {

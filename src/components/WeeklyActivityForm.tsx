@@ -13,7 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { useLanguage, Language } from "@/hooks/useLanguage";
 import { toast } from "sonner";
-import { LocationPermissionDialog } from "./LocationPermissionDialog";
+import { Geolocation } from '@capacitor/geolocation';
 
 const dateLocales: Record<Language, typeof nl> = { tr, en: enUS, nl, ar: arSA };
 
@@ -55,8 +55,6 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
   const [loading, setLoading] = useState(false);
   const [locatingDay, setLocatingDay] = useState<string | null>(null);
   const [uploadingDay, setUploadingDay] = useState<string | null>(null);
-  const [permissionDialogOpen, setPermissionDialogOpen] = useState(false);
-  const [retryDay, setRetryDay] = useState<keyof WeeklyWork | null>(null);
   const { t, language } = useLanguage();
 
   const cur = useMemo(() => ({
@@ -160,11 +158,28 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
   };
 
   const fetchAddress = async (day: keyof WeeklyWork) => {
-    if (!navigator.geolocation) return toast.error(t("auth.error"));
     setLocatingDay(day);
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude: lat, longitude: lon } = pos.coords;
+
+    try {
+      const permission = await Geolocation.checkPermissions();
+      if (permission.location !== 'granted') {
+        const request = await Geolocation.requestPermissions();
+        if (request.location !== 'granted') {
+          toast.error(t("activity.locationFailed"));
+          setLocatingDay(null);
+          return;
+        }
+      }
+
+      const pos = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000
+      });
+
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
       const gMaps = `https://www.google.com/maps?q=${lat},${lon}`;
+
       try {
         const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, {
           headers: { 'Accept-Language': language }
@@ -176,16 +191,12 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
         }));
       } catch {
         setWeeklyWork(prev => ({ ...prev, [day]: { ...prev[day], googleMapsUrl: gMaps } }));
-      } finally { setLocatingDay(null); }
-    }, (error) => {
-      setLocatingDay(null);
-      if (error.code === error.PERMISSION_DENIED) {
-        setRetryDay(day);
-        setPermissionDialogOpen(true);
-      } else {
-        toast.error(t("auth.error") || "Konum alınamadı.");
       }
-    });
+    } catch (error) {
+      toast.error(t("activity.locationFailed"));
+    } finally {
+      setLocatingDay(null);
+    }
   };
 
   const totalHours = useMemo(() =>
@@ -400,11 +411,6 @@ export function WeeklyActivityForm({ onSubmit }: WeeklyActivityFormProps) {
           {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <><Save className="w-5 h-5" /> {cur.addActivity}</>}
         </Button>
       </div>
-      <LocationPermissionDialog
-        open={permissionDialogOpen}
-        onOpenChange={setPermissionDialogOpen}
-        onRetry={() => retryDay && fetchAddress(retryDay)}
-      />
     </form>
   );
 }
