@@ -30,7 +30,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-500/30">
       {/* Navbar */}
-      <header className="border-b border-white/5 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-white/5 bg-slate-950/80 backdrop-blur-md sticky top-safe z-50">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
             <Logo className="h-8 transition-transform group-hover:scale-105" />

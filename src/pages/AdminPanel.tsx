@@ -332,7 +332,7 @@ const AdminPanel = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HEADER */}
-      <header className="sticky top-0 z-50 bg-card/85 backdrop-blur-xl border-b">
+      <header className="sticky top-safe z-50 bg-card/85 backdrop-blur-xl border-b">
         <div className="container max-w-4xl mx-auto px-3 sm:px-4 h-14 flex items-center justify-between gap-3">
 
           <div className="flex items-center gap-1 sm:gap-3 flex-1 min-w-0">

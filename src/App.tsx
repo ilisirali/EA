@@ -11,8 +11,12 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
+import { Capacitor } from "@capacitor/core";
+import { Navigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
+
+const isIOS = Capacitor.getPlatform() === 'ios';
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -24,7 +28,7 @@ const App = () => (
           <BrowserRouter>
             <div className="safe-area-container w-full min-h-screen">
               <Routes>
-                <Route path="/" element={<Landing />} />
+                <Route path="/" element={isIOS ? <Navigate to="/auth" replace /> : <Landing />} />
                 <Route path="/home" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<AdminPanel />} />

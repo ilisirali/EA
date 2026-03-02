@@ -49,7 +49,7 @@ const Index = () => {
   return (
     <div className="min-h-screen min-h-[100dvh] bg-background selection:bg-primary selection:text-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 glass border-b border-border/40 shadow-sm safe-top">
+      <header className="sticky top-safe z-50 glass border-b border-border/40 shadow-sm">
         <div className="container max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4 min-w-0 group cursor-pointer" onClick={() => navigate('/')}>
@@ -152,7 +152,7 @@ const Index = () => {
       </main>
 
       {/* Mobile FAB - Enhanced */}
-      <div className="fixed bottom-8 right-8 z-40 sm:hidden animate-in zoom-in-50 duration-500 delay-500">
+      <div className="fixed bottom-8 right-8 mb-[env(safe-area-inset-bottom)] z-40 sm:hidden animate-in zoom-in-50 duration-500 delay-500">
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger asChild>
             <Button size="lg" className="h-16 w-16 rounded-[2rem] shadow-[0_20px_40px_rgba(var(--primary),0.3)] bg-primary hover:bg-black text-white hover:shadow-2xl active:scale-90 transition-all duration-300 group">
