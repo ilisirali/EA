@@ -22,13 +22,15 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-  <Route path="/" element={<Landing />} />
-  <Route path="/home" element={<Index />} />
-  <Route path="/auth" element={<Auth />} />
-  <Route path="/admin" element={<AdminPanel />} />
-  <Route path="*" element={<NotFound />} />
-</Routes>
+            <div className="safe-area-container w-full min-h-screen">
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/home" element={<Index />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/admin" element={<AdminPanel />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
