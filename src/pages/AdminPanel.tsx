@@ -332,25 +332,29 @@ const AdminPanel = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HEADER */}
-      <header className="sticky top-safe z-50 bg-card/85 backdrop-blur-xl border-b py-2 sm:py-0">
-        <div className="container max-w-4xl mx-auto px-3 sm:px-4 min-h-[56px] flex flex-wrap items-center justify-between gap-3">
+      <header className="sticky top-safe z-50 bg-card/85 backdrop-blur-xl border-b py-3 sm:py-0">
+        <div className="container max-w-4xl mx-auto px-3 sm:px-4 min-h-[64px] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
 
-          <div className="flex items-center gap-1 sm:gap-3 flex-1 min-w-[200px]">
-            <Button variant="ghost" size="icon" className="shrink-0 -ml-2 h-9 w-9 sm:h-10 sm:w-10" onClick={() => navigate("/")}>
-              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
+          {/* Logo & Title Area - Full width on mobile */}
+          <div className="flex items-center justify-between w-full sm:w-auto sm:flex-1">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Button variant="ghost" size="icon" className="shrink-0 -ml-2 h-9 w-9 sm:h-10 sm:w-10" onClick={() => navigate("/")}>
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              </Button>
 
-            <Logo className="h-5 sm:h-6 shrink-0" />
+              <Logo className="h-6 sm:h-6 shrink-0" />
 
-            <div className="flex items-center gap-1.5 min-w-0 ml-1">
-              <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-primary shrink-0" />
-              <h1 className="font-semibold text-sm sm:text-base whitespace-nowrap overflow-hidden text-ellipsis">
-                {t('adminPanel.title')}
-              </h1>
+              <div className="flex items-center gap-1.5 min-w-0 ml-1">
+                <Shield className="w-4 h-4 text-primary shrink-0" />
+                <h1 className="font-semibold text-base whitespace-nowrap overflow-hidden text-ellipsis">
+                  {t('adminPanel.title')}
+                </h1>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-end gap-2 shrink-0 w-full sm:w-auto">
+          {/* Actions Menu - Full width row on mobile below the logo */}
+          <div className="flex items-center justify-end w-full sm:w-auto gap-3 shrink-0 pb-1 sm:pb-0">
             <LanguageSelector />
 
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
