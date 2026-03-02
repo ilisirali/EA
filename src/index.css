@@ -160,3 +160,45 @@
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* ========================================================= */
+/* APPLE APP STORE DESIGN GUIDELINES (iOS ONLY)              */
+/* ========================================================= */
+
+/* Only applies when Capacitor runs on iOS devices */
+.ios {
+
+  /* 1. Prevent accidental text selection (Makes it feel like a real native app) */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+
+  /* 2. Prevent zoom on input fields by forcing base text size to 16px */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* 3. Ensure touch targets are at least 44x44px for main interactable elements */
+  button,
+  .touch-target,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+    /* Add slight interaction feedback since web lacks haptic touch */
+    transition: transform 0.1s;
+  }
+
+  button:active,
+  a:active {
+    transform: scale(0.96);
+  }
+}
+
+/* Explicitly allow selection inside input fields on iOS, otherwise they can't type */
+.ios input,
+.ios textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
