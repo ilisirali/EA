@@ -332,28 +332,31 @@ const AdminPanel = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HEADER */}
-      <header className="sticky top-0 bg-card border-b">
-        <div className="container max-w-4xl mx-auto px-4 py-3 flex justify-between">
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
+      <header className="sticky top-0 z-50 bg-card/85 backdrop-blur-xl border-b">
+        <div className="container max-w-4xl mx-auto px-3 sm:px-4 h-14 flex items-center justify-between gap-3">
+
+          <div className="flex items-center gap-1 sm:gap-3 flex-1 min-w-0">
+            <Button variant="ghost" size="icon" className="shrink-0 -ml-2" onClick={() => navigate("/")}>
               <ArrowLeft className="w-5 h-5" />
             </Button>
 
-            <Logo className="h-7 hidden sm:block" />
+            <Logo className="h-6 hidden md:block shrink-0" />
 
-            <h1 className="font-semibold flex items-center gap-2">
-              <Shield className="w-4 h-4" />
-              {t('adminPanel.title')}
-            </h1>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Shield className="w-4 h-4 text-primary shrink-0" />
+              <h1 className="font-semibold text-base whitespace-nowrap overflow-hidden text-ellipsis">
+                {t('adminPanel.title')}
+              </h1>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <LanguageSelector />
 
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button size="icon">
-                  <UserPlus className="w-4 h-4" />
+                <Button size="icon" className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full">
+                  <UserPlus className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </DialogTrigger>
 
@@ -416,8 +419,8 @@ const AdminPanel = () => {
             <Loader2 className="w-8 h-8 animate-spin" />
           </div>
         ) : (
-          <div className="border rounded-lg">
-            <Table>
+          <div className="border rounded-lg overflow-x-auto bg-card shadow-sm">
+            <Table className="min-w-[600px] sm:min-w-full">
               <TableHeader>
                 <TableRow>
                   <TableHead>{t('adminPanel.name')}</TableHead>
