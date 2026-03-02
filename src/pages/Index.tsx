@@ -50,20 +50,24 @@ const Index = () => {
     <div className="min-h-screen min-h-[100dvh] bg-background selection:bg-primary selection:text-white">
       {/* Header */}
       <header className="sticky top-safe z-50 glass border-b border-border/40 shadow-sm">
-        <div className="container max-w-4xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 min-w-0 group cursor-pointer" onClick={() => navigate('/')}>
-              <div className="p-1 sm:p-1.5 transition-transform group-hover:scale-105 active:scale-95">
-                <Logo className="h-8 sm:h-12" />
-              </div>
-              <div className="hidden xs:block h-8 w-[1px] bg-border/60 mx-1" />
-              <div className="hidden xs:flex flex-col">
-                <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em] leading-none mb-1">Professional</span>
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-none">Management</span>
+        <div className="container max-w-4xl mx-auto px-2 sm:px-6 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
+            {/* Logo area - full width on mobile */}
+            <div className="flex items-center justify-between w-full sm:w-auto sm:flex-1">
+              <div className="flex items-center gap-2 sm:gap-4 min-w-0 group cursor-pointer" onClick={() => navigate('/')}>
+                <div className="p-1 sm:p-1.5 transition-transform group-hover:scale-105 active:scale-95">
+                  <Logo className="h-8 sm:h-12 shrink-0" />
+                </div>
+                <div className="hidden xs:block h-8 w-[1px] bg-border/60 mx-1" />
+                <div className="hidden xs:flex flex-col">
+                  <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em] leading-none mb-1">Professional</span>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-none">Management</span>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            {/* Actions area - full width on mobile, scrolling if needed */}
+            <div className="flex items-center justify-start sm:justify-end gap-1.5 sm:gap-3 w-full sm:w-auto shrink-0 overflow-x-auto pb-1 sm:pb-0 scroll-smooth-ios">
               {isAdmin && (
                 <div className="flex items-center gap-2 mr-2">
                   <UserFilter
