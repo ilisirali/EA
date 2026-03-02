@@ -45,6 +45,19 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<!-- Privacy Keys for Capacitor Permissions -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to attach it precisely to your work activity reports.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to attach it precisely to your work activity reports.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera so you can take photos of your work.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library to save and upload your work photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library so you can pick photos for your work activity reports.</string>
+
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>
